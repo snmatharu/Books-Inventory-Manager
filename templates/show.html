@@ -1,0 +1,84 @@
+<html>
+<head>
+  <title>Inventory View</title>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="/">Books Inventory Manager</a>
+          
+          
+            <ul class="nav justify-content-end">
+                <li class="nav-item">
+                  <a class="nav-link "  href="/">View Inventory</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="/update">Update Inventory</a>
+                </li>
+              </ul>
+          </div>
+        </div>
+      </nav>
+<br>
+{% csrf_token %}
+
+<div class="container">
+    <div class="row justify-content-md-center">
+        <div class="col col-lg-2">
+        <div class="dropdown">
+            <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+              Genre
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                <li><a class="dropdown-item" href="/">All</a></li>
+                {% for books in discgenre %}
+                <li><a href="/?genre={{books.genre}}&language="
+                 class="dropdown-item">{{books.genre}}</a></li>
+                {% endfor %}
+            </ul>
+          </div>
+      
+        </div>
+        <div class="col col-lg-2">
+        
+        <div class="dropdown">
+            <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+              Language
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                <li><a class="dropdown-item" href="/">All</a></li>
+                {% for books in disclanguage %}
+                <li><a href="/?genre=&language={{books.language}}"
+                     class="list-group-item list-group-item-action">{{books.language}}</a>
+                </li>{% endfor %} 
+                </ul>
+            </div>
+          </div>
+    </div>
+</div><br>
+<h6 class="text-center">Filter Data by Genre and Language </h6><hr>
+{% for books in books_data %}
+{% if forloop.first %}<div class="row">{% endif %}
+    <div class="col-xs-4">
+
+    <div class="card-body">
+      <h4 class="card-title">{{ books.title}}</h5>
+      <h5 class="card-subtitle mb-2 text-muted">By: {{ books.author }}</h6>
+      
+      <h6 class="card-subtitle mb-2 text-muted">Genre: {{ books.genre}}</h6>
+        <h6 class="card-subtitle mb-2 text-muted">Language:    {{ books.language }}</h6>
+    </div>
+</div>
+{% if forloop.counter|divisibleby:3 %}</div><div class="row">{% endif %}
+{% if forloop.last %}</div>{% endif %} 
+{% endfor %}
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+</body>
+
+</html>
